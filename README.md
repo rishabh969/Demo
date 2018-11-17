@@ -5,7 +5,3 @@
 - Espresso UI testing
 - RecyclerView, CardView, Customize adapter
 
-![mvp demo](screenshots/demo.gif?raw=true "demo")
-
-#### License
-MIT
