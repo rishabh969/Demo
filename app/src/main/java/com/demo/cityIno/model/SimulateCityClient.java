@@ -1,23 +1,17 @@
 package com.demo.cityIno.model;
 
 import android.os.AsyncTask;
-import android.os.Handler;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
 import com.demo.cityIno.BuildConfig;
+import com.demo.cityIno.R;
 import com.demo.cityIno.mvp.CityListActivity;
 import com.demo.cityIno.mvp.CityListContract;
-import com.demo.cityIno.util.Utility;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -76,8 +70,6 @@ public final class SimulateCityClient implements CityRepo {
 
             @Override
             public void onError(String errorResponse) {
-               // view.hideProgress();
-               // view.showLoadingError(errorResponse);
                 callback.onError("Error");
             }
         });

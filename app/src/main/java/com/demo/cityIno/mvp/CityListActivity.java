@@ -1,8 +1,5 @@
 package com.demo.cityIno.mvp;
 
-import android.annotation.TargetApi;
-import android.app.ActionBar;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,11 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.demo.cityIno.R;
-import com.demo.cityIno.model.City;
 import com.demo.cityIno.model.ResponseModel;
 import com.demo.cityIno.model.SimulateCityClient;
+import com.demo.cityIno.util.Utility;
 
 import java.util.List;
 
@@ -41,33 +37,41 @@ public class CityListActivity extends AppCompatActivity implements CityListContr
         setContentView(R.layout.activity_movie_list);
         initViews();
         actionBar = getSupportActionBar();
-        actionBar.setTitle("Title");
+        actionBar.setTitle(R.string.title);
     }
 
     private void initViews(){
         presenter = new CityPresenter(CityListActivity.this, new SimulateCityClient(this));
-        recyclerView = (RecyclerView) findViewById(R.id.movies_recycler_list); // list
-        tv_empty_msg = (TextView)findViewById(R.id.swipe_msg_tv); // empty message
-        recyclerView.setLayoutManager(new LinearLayoutManager(this)); // for vertical liner list
+        recyclerView = (RecyclerView) findViewById(R.id.cityinfo_recycler_list);
+        tv_empty_msg = (TextView)findViewById(R.id.swipe_msg_tv);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         cityAdapter = new CityAdapter(this);
         recyclerView.setAdapter(cityAdapter);
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_container);
         swipeLayout.setOnRefreshListener(listener);
-        swipeLayout.setColorSchemeColors( // colors for progress dialog
+        swipeLayout.setColorSchemeColors(
                 ContextCompat.getColor(CityListActivity.this, R.color.colorPrimary),
                 ContextCompat.getColor(CityListActivity.this, R.color.colorAccent),
                 ContextCompat.getColor(CityListActivity.this, android.R.color.holo_green_light)
         );
-
-
-        presenter.loadMoviewList();
+        if(Utility.isNetworkConnected(CityListActivity.this)) {
+            presenter.loadMoviewList();
+        }else{
+            Toast.makeText(CityListActivity.this,R.string.no_internet,Toast.LENGTH_SHORT).show();
+            swipeLayout.setRefreshing(false);
+        }
     }
 
 
     private final OnRefreshListener listener = new OnRefreshListener() {
         @Override
         public void onRefresh() {
+            if(Utility.isNetworkConnected(CityListActivity.this)){
             presenter.loadMoviewList();
+            }else{
+                Toast.makeText(CityListActivity.this,R.string.no_internet,Toast.LENGTH_SHORT).show();
+                swipeLayout.setRefreshing(false);
+            }
         }
     };
 
@@ -96,9 +100,13 @@ public class CityListActivity extends AppCompatActivity implements CityListContr
 
     @Override
     public void showMovieList(List<ResponseModel.RowsBean> cities) {
+        if(Utility.isNetworkConnected(CityListActivity.this)){
         if (!cities.isEmpty()){
             cityAdapter.setList(cities);
             showORHideListView(true);
+        }else{
+            Toast.makeText(CityListActivity.this,R.string.no_internet,Toast.LENGTH_SHORT).show();
+        }
         }
     }
 

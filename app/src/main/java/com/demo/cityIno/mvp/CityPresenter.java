@@ -1,6 +1,5 @@
 package com.demo.cityIno.mvp;
 
-import com.demo.cityIno.model.City;
 import com.demo.cityIno.model.CityRepo;
 import com.demo.cityIno.model.ResponseModel;
 import com.demo.cityIno.util.EspressoTestingIdlingResource;

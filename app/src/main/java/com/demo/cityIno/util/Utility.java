@@ -1,9 +1,7 @@
 package com.demo.cityIno.util;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+import android.content.Context;
+import android.net.ConnectivityManager;
 
 /**
  * Created by Rishabh.
@@ -11,21 +9,13 @@ import java.util.Locale;
 
 public final class Utility {
 
-    public static final SimpleDateFormat tf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-
     private Utility() {
         throw new IllegalStateException("Cannot Instantiate");
     }
 
-    public static String convertMinutesToDuration(int duratonInMinutes){
-        int hours = duratonInMinutes / 60; //since both are ints, you get an int
-        int minutes = duratonInMinutes % 60;
-        return String.format(Locale.getDefault(),"%d Hours %02d Minutes",hours,minutes);
+    public static boolean isNetworkConnected(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo() != null;
     }
-
-    public static Date convertStringToDate(String yyyyddmm) throws ParseException {
-        return tf.parse(yyyyddmm);
-    }
-
 
 }

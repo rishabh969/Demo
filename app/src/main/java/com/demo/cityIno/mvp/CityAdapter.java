@@ -11,13 +11,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.demo.cityIno.R;
-import com.demo.cityIno.model.City;
 import com.demo.cityIno.model.ResponseModel;
-import com.demo.cityIno.util.Utility;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,25 +39,25 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.MovieHolder> {
 
     @Override
     public void onBindViewHolder(MovieHolder holder, final int position) {
-        Log.e(TAG, "onBindViewHolder: "+position);
-        if(listItem.get(position).getTitle().equalsIgnoreCase("null")) {
-            holder.title.setText("");
+
+        if(listItem.get(position).getTitle().equalsIgnoreCase(context.getResources().getString(R.string.checknul))) {
+            holder.txtTitle.setText("");
         }else{
-            holder.title.setText(""+listItem.get(position).getTitle());
+            holder.txtTitle.setText(""+listItem.get(position).getTitle());
         }
-        if(listItem.get(position).getDescription().equalsIgnoreCase("null")) {
-            holder.description.setText("");
+        if(listItem.get(position).getDescription().equalsIgnoreCase(context.getResources().getString(R.string.checknul))) {
+            holder.txtDescription.setText("");
         }else {
-            holder.description.setText(""+listItem.get(position).getDescription());
+            holder.txtDescription.setText(""+listItem.get(position).getDescription());
         }
 
         if(listItem.get(position).getImageHref()!=null) {
             Glide.with(context)
                     .load(Uri.parse(listItem.get(position).getImageHref())).placeholder(R.drawable.star)
-                    .into(holder.image);
+                    .into(holder.imgCity);
         }
 
-        holder.moviesLayout.setOnClickListener(new View.OnClickListener() {
+        holder.rowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(context, listItem.get(position).getTitle(), Toast.LENGTH_SHORT).show();
@@ -73,7 +69,7 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.MovieHolder> {
         listItem.clear();
         listItem.addAll(list);
         notifyDataSetChanged();
-        Log.e(TAG, "onNext: "+listItem.size() );
+        Log.e(TAG, context.getResources().getString(R.string.next)+listItem.size() );
     }
 
 
@@ -83,18 +79,17 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.MovieHolder> {
     }
 
     public static class MovieHolder extends RecyclerView.ViewHolder {
-        TextView title;
-        TextView description;
-        TextView view;
-        ImageView image;
-        LinearLayout moviesLayout;
+        TextView txtTitle;
+        TextView txtDescription;
+        ImageView imgCity;
+        LinearLayout rowView;
 
         public MovieHolder(View v) {
             super(v);
-            moviesLayout = (LinearLayout) v.findViewById(R.id.movies_layout);
-            title = (TextView) v.findViewById(R.id.title);
-            description = (TextView) v.findViewById(R.id.des);
-            image = (ImageView) v.findViewById(R.id.image);
+            rowView = (LinearLayout) v.findViewById(R.id.ll_card);
+            txtTitle = (TextView) v.findViewById(R.id.txt_title);
+            txtDescription = (TextView) v.findViewById(R.id.txt_description);
+            imgCity = (ImageView) v.findViewById(R.id.img_city);
         }
     }
 }

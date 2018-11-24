@@ -64,7 +64,7 @@ public class CityListTest {
     public void checkStaticView() {
         // verify default empty text message movies_recycler_list
         onView(withId(R.id.swipe_msg_tv)).check(matches(not(isDisplayed())));
-        onView(withId(R.id.movies_recycler_list)).check(matches(isDisplayed()));
+        onView(withId(R.id.cityinfo_recycler_list)).check(matches(isDisplayed()));
     }
 
     @Test
@@ -76,8 +76,8 @@ public class CityListTest {
       //  onView(withId(R.id.swipe_msg_tv)).check(matches(not(isDisplayed())));
 
         // verify recycler view is being displayed
-        onView(withId(R.id.movies_recycler_list)).check(matches(isDisplayed()));
-        onView(withId(R.id.movies_recycler_list))
+        onView(withId(R.id.cityinfo_recycler_list)).check(matches(isDisplayed()));
+        onView(withId(R.id.cityinfo_recycler_list))
                 .perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
 
         // Verify the toast text content
