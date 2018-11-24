@@ -21,7 +21,6 @@ android {
         }
     }
     testOptions {
-        // for issue , https://github.com/snowdream/SnowdreamFramework/issues/29
         unitTests.returnDefaultValues = true
     }
 

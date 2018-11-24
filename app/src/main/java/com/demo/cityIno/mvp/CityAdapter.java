@@ -78,6 +78,16 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.MovieHolder> {
         return listItem.size();
     }
 
+    @Override
+    public int getItemViewType(int position) {
+        return super.getItemViewType(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
+
     public static class MovieHolder extends RecyclerView.ViewHolder {
         TextView txtTitle;
         TextView txtDescription;
